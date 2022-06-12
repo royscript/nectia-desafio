@@ -1,0 +1,11 @@
+{
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "servidor desafio nectia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roy Alex Standen Barraza",
+  "license": "ISC"
+}
