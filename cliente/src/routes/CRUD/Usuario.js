@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import axios,{axiosPrivate} from "../../api/axios";
 import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import { Formik, Form } from "formik";
@@ -13,7 +13,7 @@ const Usuario = ()=>{
     const [cantPorPag, setCantPorPag] = useState(5);
     const listarUsuarios = async (search)=>{
         try {
-            const resultSet = await axios.post('/usuario/listar', {pagSiguiente : pagSiguiente, cantPorPag : cantPorPag, search});
+            const resultSet = await axiosPrivate.post('/usuario/listar', {pagSiguiente : pagSiguiente, cantPorPag : cantPorPag, search});
             setUsuarios(resultSet.data);
         } catch (error) {
             setRespuestaConsulta(

@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import Usuario from './routes/CRUD/Usuario';
+
+import Login from './routes/Login';
 
 function App() {
   return (
-    <Usuario/>
+    <Login/>
   );
 }
 

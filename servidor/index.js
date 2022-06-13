@@ -3,10 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-
+const { isAuthenticated,hasRole } = require('./auth/autenticar');
 const cookieParser = require('cookie-parser');
-//---------MODELO-------------
+//---------CONTROLADOR-------------
 const Usuarios = require('./controlador/usuario');
+const Login = require('./controlador/login')
 //----------------------------
 
 //--------MIDDLEWARE-----------
@@ -16,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended : true }));//para enviar los formulario
 app.use(cookieParser());//Para las cookies
 
 //-------LLAMADAS API----------
-
-//app.use(verificarJWT);//Los que estan bajo este middleware requeriran autenticacion
+app.use('/api/login/', Login);
+app.use(isAuthenticated);//Los que estan bajo este middleware requeriran autenticacion
 app.use('/api/usuario/', Usuarios);
 
 

@@ -9,6 +9,12 @@ router.get("/listar",(req, res)=>{
                     res
                     );
 });
+router.post("/listarEjemplo",(req, res)=>{
+    RouterRespuestas(
+                    async ()=> await usuario.listar(),
+                    res
+                    );
+});
 router.post("/listar",(req, res)=>{
     const { body } = req;
     const { pagSiguiente, cantPorPag, search }= body;
