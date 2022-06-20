@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import NumeroPaginas from "./NumeroPaginas";
 import { axiosPrivate } from "../../api/axios";
 
-const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,funcionDeDatos,placeHolderSearch,eliminar, busquedaExtra}) => {
+const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,funcionDeDatos,placeHolderSearch,eliminar, busquedaExtra, styleSearch}) => {
     const [registros, setRegistros] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginaClick, setPaginaClick] = useState(1);
@@ -47,6 +47,12 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
         
         setPagSiguiente(paginaClick);
     },[paginaClick])
+    const estiloSearch = ()=>{
+        return {
+            ...{'width':'40%'},
+            ...styleSearch
+        }
+    }
     return(
         <>
             <div className="table-responsive">
@@ -59,7 +65,7 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
                     </select>
                     &nbsp;
                     Buscar : &nbsp;
-                    <input type="search" name="search" style={{'width':'40%'}} onChange={(e)=>setSearch(e.target.value)} placeholder={placeHolderSearch}/>
+                    <input type="search" name="search" style={estiloSearch()} onChange={(e)=>setSearch(e.target.value)} placeholder={placeHolderSearch}/>
                     {busquedaExtra}
                     &nbsp;
                     <button onClick={async ()=>{

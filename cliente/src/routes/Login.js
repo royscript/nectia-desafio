@@ -7,6 +7,8 @@ import md5 from 'md5';
 import { Routes, Route } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import Inicio from "./CRUD/Index";
+import TipoSolicitud from "./CRUD/TipoSolicitud";
+import SolicitudSolicitante from "./CRUD/SolicitudSolicitante";
 const Login = ()=>{
     const [nombreUsuario, setNombreUsuario] = useState("16.428.927-3");
     const [contrasena, setContrasena] = useState("164289273");
@@ -115,6 +117,16 @@ const Login = ()=>{
                 <Route 
                 path="/Usuario" 
                 element={<Usuario usuarioLogeado={usuarioLogeado}/>}/>
+            )}
+            {comprobarPerfil("TipoSolicitud") &&(
+                <Route 
+                path="/TipoSolicitud" 
+                element={<TipoSolicitud usuarioLogeado={usuarioLogeado}/>}/>
+            )}
+            {comprobarPerfil("TipoSolicitud") &&(
+                <Route 
+                path="/Solicitud" 
+                element={<SolicitudSolicitante usuarioLogeado={usuarioLogeado}/>}/>
             )}
             {logeado &&(
                 <Route 
