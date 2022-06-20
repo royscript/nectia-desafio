@@ -11,11 +11,3 @@ export const axiosPrivate = axios.create({
         authorization : localStorage.getItem('token')
      }
 });
-
-export const fetch= (token)=> fetch(BASE_URL,{
-    method : 'POST',
-    headers : {
-        'Content-Type' : 'application/json',
-        authorization : token
-    }
-});

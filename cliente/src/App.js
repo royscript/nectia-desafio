@@ -1,9 +1,11 @@
-
+import { BrowserRouter } from 'react-router-dom';
 import Login from './routes/Login';
 
 function App() {
   return (
-    <Login/>
+    <BrowserRouter>
+      <Login/>
+    </BrowserRouter>
   );
 }
 

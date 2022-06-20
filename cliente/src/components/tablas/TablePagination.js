@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import NumeroPaginas from "./NumeroPaginas";
+import { axiosPrivate } from "../../api/axios";
 
-const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,funcionDeDatos,placeHolderSearch, busquedaExtra}) => {
+const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,funcionDeDatos,placeHolderSearch,eliminar, busquedaExtra}) => {
     const [registros, setRegistros] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
     const [paginaClick, setPaginaClick] = useState(1);
@@ -9,10 +10,25 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
     const [totalRegistros, setTotalRegistros] = useState();
     const [cantPPag, setCantPPag] = useState(5);
     const [search, setSearch] = useState();
+
+    const eliminarRegistro = async (id)=>{
+        try {
+            const resultSet = await axiosPrivate.post(eliminar.url, {id});
+            alert("Datos eliminados correctamente");
+            funcionDeDatos();
+        } catch (error) {
+            alert(error);
+        }
+        
+    }
+
     function handleChange(event) {
         setCantPorPag(event.target.value);
         setCantPPag(event.target.value);
     }
+    useEffect(()=>{
+        
+    },[])
     useEffect(()=>{
         if(data.cantidad){
             setTotalRegistros(data.cantidad[0].cantidad);
@@ -28,6 +44,7 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
     },[registros])
     useEffect(()=>{
         //listarProductos();
+        
         setPagSiguiente(paginaClick);
     },[paginaClick])
     return(
@@ -59,7 +76,7 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
                 <table className="table">
                     <thead>{head}</thead>
                     <tbody>
-                        {registros.map((value,index)=>mostrarDatos(value,index))}
+                        {registros.map((value,index)=>mostrarDatos(value,index,eliminarRegistro))}
                     </tbody>
                 </table>
             </div>

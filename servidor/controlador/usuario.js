@@ -9,12 +9,6 @@ router.get("/listar",(req, res)=>{
                     res
                     );
 });
-router.post("/listarEjemplo",(req, res)=>{
-    RouterRespuestas(
-                    async ()=> await usuario.listar(),
-                    res
-                    );
-});
 router.post("/listar",(req, res)=>{
     const { body } = req;
     const { pagSiguiente, cantPorPag, search }= body;
@@ -25,25 +19,25 @@ router.post("/listar",(req, res)=>{
 });
 router.post("/buscar-usuario",(req, res)=>{
     const { body } = req;
-    const { rutUsuario }= body;
+    const { rutusuario }= body;
     RouterRespuestas(
-                    async ()=> await usuario.buscarPorRut(rutUsuario),
+                    async ()=> await usuario.buscarPorRut(rutusuario),
                     res
                     );
 });
 router.put("/insertar",(req, res)=>{
     const { body } = req;
-    const { nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,Permiso_idPermiso }= body;
+    const { nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idperfilusuario }= body;
     RouterRespuestas(
-                    async ()=> await usuario.insertar(nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,Permiso_idPermiso),
+                    async ()=> await usuario.insertar(nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idperfilusuario),
                     res
                     );
 });
 router.put("/editar",(req, res)=>{
     const { body } = req;
-    const { nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,Permiso_idPermiso,idUsuario }= body;
+    const { nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idusuario,idperfilusuario }= body;
     RouterRespuestas(
-                    async ()=> await usuario.editar(nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,direccionUsuario,telefonoUsuario,Permiso_idPermiso,idUsuario),
+                    async ()=> await usuario.editar(nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idusuario,idperfilusuario),
                     res
                     );
 });

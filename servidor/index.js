@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 //---------CONTROLADOR-------------
 const Usuarios = require('./controlador/usuario');
 const Login = require('./controlador/login')
+const Permiso = require('./controlador/perfil');
 //----------------------------
 
 //--------MIDDLEWARE-----------
@@ -20,6 +21,7 @@ app.use(cookieParser());//Para las cookies
 app.use('/api/login/', Login);
 app.use(isAuthenticated);//Los que estan bajo este middleware requeriran autenticacion
 app.use('/api/usuario/', Usuarios);
+app.use('/api/permiso/', Permiso);
 
 
 //------SUBIR APP--------------

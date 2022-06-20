@@ -8,18 +8,18 @@ class Usuarios extends mysql{
         return this.consulta("SELECT * FROM usuario");
     }
 
-    async buscarPorRut(rutUsuario){
-        return await this.consulta("SELECT * FROM usuario WHERE rutUsuario LIKE ? ",[rutUsuario]);
+    async buscarPorRut(rutusuario){
+        return await this.consulta("SELECT * FROM usuario WHERE rutusuario LIKE ? ",[rutusuario]);
     }
 
-    login(rutUsuario,contrasena){
-        const sql = "SELECT * FROM usuario where rutUsuario like (?) and contrasenaUsuario like (?) ";
-        return this.consulta(sql,[rutUsuario,contrasena]);
+    login(rutusuario,contrasena){
+        const sql = "SELECT * FROM usuario where md5(rutusuario) like (?) and md5(contrasenausuario) like (?) ";
+        return this.consulta(sql,[rutusuario,contrasena]);
     }
 
-    buscarPorId(idUsuario){
-        const sql = "SELECT * FROM usuario where idUsuario = (?) ";
-        return this.consulta(sql,[idUsuario]);
+    buscarPorId(idusuario){
+        const sql = "SELECT * FROM usuario where idusuario = (?) ";
+        return this.consulta(sql,[idusuario]);
     }
 
     async listarConFiltro(pagSiguiente, cantPorPag, search){
@@ -27,37 +27,38 @@ class Usuarios extends mysql{
         var parametrosBuscar = [];
         if(search){
             parametrosBuscar = ['%'+search+'%','%'+search+'%',search];
-            where = ` WHERE nombreUsuario LIKE ? OR apellidoUsuario LIKE ? OR rutUsuario LIKE ? `;
+            where = ` WHERE nombreusuario LIKE ? OR apellidousuario LIKE ? OR rutusuario LIKE ? `;
             pagSiguiente = 1;//Cuando se realiza una busqueda comienza con la pagina 1
         }
         let resp = {
-            datos : await this.consulta("SELECT * FROM usuario "+where+" "+this.paginador(pagSiguiente, cantPorPag),parametrosBuscar),
-            cantidad : await this.consulta("SELECT count(idUsuario) as cantidad FROM usuario "+where+" ",parametrosBuscar)
+            datos : await this.consulta("SELECT * FROM usuario "+where+" ORDER BY idusuario DESC "+this.paginador(pagSiguiente, cantPorPag),parametrosBuscar),
+            cantidad : await this.consulta("SELECT count(idusuario) as cantidad FROM usuario "+where+" ORDER BY idusuario DESC ",parametrosBuscar)
         }
         return resp;
     }
-    insertar(nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario){
-        const sql = "INSERT INTO usuario (nombreUsuario, apellidoUsuario,"
-                                            +"emailUsuario, rutUsuario,"
-                                            +"contrasenaUsuario) "
-                                            +"VALUES (?,?,?,?,?,?,?,?)";
-        return this.consulta(sql,[nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario]);
+    insertar(nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idperfilusuario){
+        const sql = "INSERT INTO usuario (nombreusuario, apellidousuario,"
+                                            +"emailusuario, rutusuario,"
+                                            +"contrasenausuario,idperfilusuario) "
+                                            +"VALUES (?,?,?,?,?,?)";
+        return this.consulta(sql,[nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idperfilusuario]);
     }
-    editar(nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,idUsuario){
+    editar(nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idusuario,idperfilusuario){
         const sql = "UPDATE usuario "
                                 +"SET "
-                                +"nombreUsuario= ? "
-                                +",apellidoUsuario= ? "
-                                +",emailUsuario= ? "
-                                +",rutUsuario= ? "
-                                +",contrasenaUsuario= ? "
-                    +" WHERE idUsuario = ? ";
-        return this.consulta(sql,[nombreUsuario,apellidoUsuario,emailUsuario,rutUsuario,contrasenaUsuario,idUsuario]);
+                                +"nombreusuario= ? "
+                                +",apellidousuario= ? "
+                                +",emailusuario= ? "
+                                +",rutusuario= ? "
+                                +",contrasenausuario= ? "
+                                +",idperfilusuario= ?"
+                    +" WHERE idusuario = ? ";
+        return this.consulta(sql,[nombreusuario,apellidousuario,emailusuario,rutusuario,contrasenausuario,idperfilusuario,idusuario]);
     }
-    async eliminar(idUsuario){
-        const sql = "DELETE FROM `usuario` WHERE `idUsuario` = ? ";
+    async eliminar(idusuario){
+        const sql = "DELETE FROM `usuario` WHERE `idusuario` = ? ";
         //console.log(sql, idProducto);
-        var resp = await this.consulta(sql,[idUsuario]);
+        var resp = await this.consulta(sql,[idusuario]);
         return resp;
     }
 }

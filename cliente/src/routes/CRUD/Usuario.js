@@ -1,36 +1,53 @@
 import { useEffect, useState } from "react";
-import axios,{axiosPrivate} from "../../api/axios";
+import {axiosPrivate} from "../../api/axios";
 import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
-import { Formik, Form } from "formik";
 import TablePagination from '../../components/tablas/TablePagination';
-const Usuario = ()=>{
-    const [respuestaConsulta, setRespuestaConsulta] = useState();
+import FrmUsuario from "./formularios/FrmUsuario";
+const Usuario = ({usuarioLogeado})=>{
     const [usuarios, setUsuarios] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
-    const [botonPresionado,setBotonPresionado] = useState(null);
+    const [accionFormulario,setAccionFormulario] = useState(null);
     const [pagSiguiente, setPagSiguiente] = useState(1);
     const [cantPorPag, setCantPorPag] = useState(5);
+    
     const listarUsuarios = async (search)=>{
         try {
             const resultSet = await axiosPrivate.post('/usuario/listar', {pagSiguiente : pagSiguiente, cantPorPag : cantPorPag, search});
-            setUsuarios(resultSet.data);
+            if(resultSet.status===200){
+                setUsuarios(resultSet.data);
+            }else{
+                alert("Error : "+resultSet.status);
+            }
         } catch (error) {
-            setRespuestaConsulta(
-                <div className="alert alert-danger" role="alert">
-                    {error}
-                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>);
+            alert(error);
         }
         
     }
+    /* Al utilizar el paginador realizamos la busqueda */
+    useEffect(()=>{
+        listarUsuarios();
+    },[pagSiguiente,cantPorPag])
     useEffect(()=>{
         listarUsuarios();
     },[])
+    if(accionFormulario==="agregar" || accionFormulario==="modificar"){
+        return <FrmUsuario 
+                            accionFormulario={accionFormulario} 
+                            setAccionFormulario={setAccionFormulario}
+                            listarUsuarios={listarUsuarios}
+                            valoresFormulario={valoresFormulario}/>;
+    }
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Usuarios" dondeEstoy="" mensajeInicial=""/>
+            <NavBar nombreMantenedor="Usuarios" dondeEstoy="Usuario" mensajeInicial="" usuarioLogeado={usuarioLogeado}/>
             <main>
+                <button style={{"float":"right","marginTop":"-50px"}} 
+                        className="btn btn-primary btn-sm"
+                        onClick={()=>{
+                            setValoresFormulario(null);
+                            setAccionFormulario("agregar");
+                        }}>Agregar +</button>
             <TablePagination
                 head={
                     <tr>
@@ -38,23 +55,23 @@ const Usuario = ()=>{
                         <th>Nombres</th>
                         <th>Email</th>
                         <th>Rut</th>
-                        <th>Contraseña</th>
                         <th>Accion</th>
                     </tr>
                 }
                 mostrarDatos={
-                    (value,index)=>
+                    (value,index,eliminarRegistro)=>
                     <tr key={index+'fila'}>
-                        <td>{value.idUsuario}</td>
-                        <td>{value.nombreUsuario+" "+value.apellidoUsuario}</td>
-                        <td>{value.emailUsuario}</td>
-                        <td>{value.rutUsuario}</td>
-                        <td>{value.contrasenaUsuario}</td>
+                        <td>{value.idusuario}</td>
+                        <td>{value.nombreusuario+" "+value.apellidousuario}</td>
+                        <td>{value.emailusuario}</td>
+                        <td>{value.rutusuario}</td>
                         <td>
                             <div className="btn-group" role="group">
                                 <button type="button" className="btn btn-warning" onClick={
                                     ()=>{
                                         setValoresFormulario(value);
+                                        setAccionFormulario("modificar");
+                                        
                                     }
                                 }>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">
@@ -63,8 +80,8 @@ const Usuario = ()=>{
                                 </button>
                                 <button type="button" className="btn btn-danger" onClick={
                                     ()=>{
-                                        var resp = window.confirm(`Desea eliminar este usuario? ${value.nombreUsuario}`);
-                                        //if(resp) eliminarUsuario(value.idUsuario);
+                                        var resp = window.confirm(`Desea eliminar este usuario? ${value.nombreusuario}`);
+                                        if(resp) eliminarRegistro(value.idusuario);
                                     }
                                 }>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -80,6 +97,9 @@ const Usuario = ()=>{
                 setPagSiguiente={setPagSiguiente}
                 funcionDeDatos={listarUsuarios}
                 placeHolderSearch="Buscar por nombres, apellidos o rut del usuario"
+                eliminar={{
+                    url : '/usuario/eliminar'
+                }}
             />
             </main>
             <Footer/>
