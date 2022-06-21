@@ -4,6 +4,7 @@ import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
 import FrmSolicitud from "./formularios/FrmSolicitud";
+import VistaSolicitudSolicitante from "./vistas/VistaSolicitudSolicitante";
 const SolicitudSolicitante = ({usuarioLogeado})=>{
     const [tipoSolicitud, setTipoSolicitud] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
@@ -50,8 +51,15 @@ const SolicitudSolicitante = ({usuarioLogeado})=>{
     useEffect(()=>{
         listarSolicitudes();
     },[estadoSolicitud])
-    if(accionFormulario==="agregar" || accionFormulario==="modificar"){
+    if(accionFormulario==="agregar"){
         return <FrmSolicitud 
+                            accionFormulario={accionFormulario} 
+                            setAccionFormulario={setAccionFormulario}
+                            listarSolicitudes={listarSolicitudes}
+                            valoresFormulario={valoresFormulario}/>;
+    }
+    if(accionFormulario==="mostrarRespuesta"){
+        return <VistaSolicitudSolicitante 
                             accionFormulario={accionFormulario} 
                             setAccionFormulario={setAccionFormulario}
                             listarSolicitudes={listarSolicitudes}
@@ -111,6 +119,17 @@ const SolicitudSolicitante = ({usuarioLogeado})=>{
                         <td>{value.fechaFin}</td>
                         <td>
                             <div className="btn-group" role="group">
+                                <button type="button" className="btn btn-warning" onClick={
+                                    ()=>{
+                                        setAccionFormulario("mostrarRespuesta");
+                                        setValoresFormulario(value);
+                                    }
+                                }>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                    </svg>
+                                </button>
                                 <button type="button" className="btn btn-danger" onClick={
                                     ()=>{
                                         var resp = window.confirm(`Desea eliminar esta solicitud? ${value.nombretiposolicitud}`);

@@ -145,6 +145,10 @@ const FrmEvaluarSolicitud = ({accionFormulario,setAccionFormulario,listarSolicit
                                                         <Boton  label={"Guardar Respuesta"} 
                                                                 type={"Submit"} 
                                                                 className={"btn btn-warning"}/>
+                                                        <Boton label={"Cancelar"} type="button" className="btn btn-danger"
+                                                                onClick={()=>{
+                                                                    setAccionFormulario(null)
+                                                                }}/>
                                                     </div>
                                                 </div>
                                             </div>

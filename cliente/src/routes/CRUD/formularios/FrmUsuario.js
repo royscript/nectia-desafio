@@ -20,6 +20,24 @@ const FrmUsuario = ({accionFormulario,setAccionFormulario,listarUsuarios,valores
         const resultSet = await axiosPrivate.post('/permiso/listar');
         setPermisos(resultSet.data);
     }
+    var Fn = {
+        // Valida el rut con su cadena completa "XXXXXXXX-X"
+        validaRut : function (rutCompleto) {
+            if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+                return false;
+            var tmp 	= rutCompleto.split('-');
+            var digv	= tmp[1]; 
+            var rut 	= tmp[0];
+            if ( digv == 'K' ) digv = 'k' ;
+            return (Fn.dv(rut) == digv );
+        },
+        dv : function(T){
+            var M=0,S=1;
+            for(;T;T=Math.floor(T/10))
+                S=(S+T%10*(9-M++%6))%11;
+            return S?S-1:'k';
+        }
+    }
     useEffect(()=>{
         listarPermiso();
     },[])
@@ -52,6 +70,8 @@ const FrmUsuario = ({accionFormulario,setAccionFormulario,listarUsuarios,valores
                             }
                             if(!values.rutusuario) {
                                 errors.rutusuario = 'Requerido'
+                            }else if(!Fn.validaRut(values.rutusuario)){
+                                errors.rutusuario = 'Rut inválido'
                             } else if (values.rutusuario.length < 5) {
                                 errors.rutusuario = 'Ingresa el rut del usuario'
                             } else {
@@ -159,7 +179,7 @@ const FrmUsuario = ({accionFormulario,setAccionFormulario,listarUsuarios,valores
                                             <Input name="nombreusuario" label="Nombres del Usuario" type="text"/>
                                             <Input name="apellidousuario" label="Apellidos del Usuario" type="text"/>
                                             <Input name="emailusuario" label="E-mail del Usuario" type="text"/>
-                                            <Input name="rutusuario" label="Rut del Usuario" type="text"/>
+                                            <Input name="rutusuario" label="Rut del Usuario : (formato ########-#, sin punto, con guión)" type="text"/>
                                             <Input name="contrasenausuario" label="Contraseña del Usuario" type="text"/>
                                             <Select name="idperfilusuario" label="Permiso del Usuario">
                                                 <option value={""}>Seleccione</option>
