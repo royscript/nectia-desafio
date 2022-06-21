@@ -1,4 +1,6 @@
 const mysql = require('../conexiones/conexionMysql');
+const NegociacionSolicitud = require('./NegociacionSolicitud');
+const negociacion = new NegociacionSolicitud(); 
 class Solicitud extends mysql{
     constructor(){
         super();
@@ -43,7 +45,7 @@ class Solicitud extends mysql{
                             DATE_FORMAT(S.fechafinalsolicitud, "%d-%m-%Y") fechaFin `;
         const sql = ` 
                     FROM solicitud S
-                    INNER JOIN usuario ADMIN
+                    LEFT JOIN usuario ADMIN
                     ON(ADMIN.idusuario=S.idusuario)
                     INNER JOIN usuario CLIENTE
                     ON(CLIENTE.idusuario=S.usu_idusuario)
@@ -73,24 +75,23 @@ class Solicitud extends mysql{
         }
         return resp;
     }
-    insertar(idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud){
+    async insertar(idtiposolicitud, idusuario, comentariosolicitantenegociacionsolicitud, fechainiciopropuesta, fechafinalpropuesta){
         const sql = "INSERT INTO solicitud (idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud) "
-                                            +"VALUES (?,?,?,?,?,?,?,?)";
-        return this.consulta(sql,[idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud]);
+                                            +"VALUES (?,NULL,?,3,NOW(),NULL,NOW(),NULL)";
+        const resp = await this.consulta(sql,[idtiposolicitud, idusuario]);
+        const idSolicitud = resp.insertId;
+        negociacion.insertarNegociacionSolicitante(idSolicitud,comentariosolicitantenegociacionsolicitud, fechainiciopropuesta, fechafinalpropuesta);
     }
-    editar(idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud,idsolicitud){
+    async editar(idsolicitud,idusuario,idnegociacionsolicitud, idestadosolicitud, comentariorespuestanegociacionsolicitud, fechafinalcorregidanegociacionsolicitud, fechainiciocorregidanegociacionsolicitud){
         const sql = "UPDATE solicitud "
                                 +"SET "
-                                +",idtiposolicitud= ?"
-                                +",idusuario= ?"
-                                +",usu_idusuario= ?"
+                                +"idusuario= ?"
                                 +",idestadosolicitud= ?"
-                                +",fechasolicitud= ?"
-                                +",fecharespuesta= ?"
-                                +",fechainiciosolicitud= ?"
-                                +",fechafinalsolicitud= ?"
+                                +",fecharespuesta = NOW()"
+                                +",fechafinalsolicitud = NOW()"
                     +" WHERE idsolicitud  = ? ";
-        return this.consulta(sql,[idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud,idsolicitud]);
+        await this.consulta(sql,[idusuario, idestadosolicitud, idsolicitud]);
+        negociacion.responderAdministradorNegociacion(idnegociacionsolicitud, comentariorespuestanegociacionsolicitud, fechafinalcorregidanegociacionsolicitud, fechainiciocorregidanegociacionsolicitud);
     }
     async eliminar(idsolicitud ){
         const sql = "DELETE FROM `solicitud` WHERE `idsolicitud` = ? ";

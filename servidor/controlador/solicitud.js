@@ -28,18 +28,18 @@ router.post("/buscar-solicitud-usuario",(req, res)=>{
                     );
 });
 router.put("/insertar",(req, res)=>{
-    const { body } = req;
-    const { idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud }= body;
+    const { body, user } = req;
+    const { idtiposolicitud, comentariosolicitantenegociacionsolicitud, fechainiciopropuesta, fechafinalpropuesta }= body;
     RouterRespuestas(
-                    async ()=> await solicitud.insertar(idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud),
+                    async ()=> await solicitud.insertar(idtiposolicitud, user.idusuario, comentariosolicitantenegociacionsolicitud, fechainiciopropuesta, fechafinalpropuesta),
                     res
                     );
 });
-router.put("/editar",(req, res)=>{
-    const { body } = req;
-    const { idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud,idsolicitud }= body;
+router.put("/evaluar",(req, res)=>{
+    const { body, user } = req;
+    const { idsolicitud,idnegociacionsolicitud, idestadosolicitud, comentariorespuestanegociacionsolicitud, fechafinalcorregidanegociacionsolicitud, fechainiciocorregidanegociacionsolicitud }= body;
     RouterRespuestas(
-                    async ()=> await solicitud.editar(idtiposolicitud,idusuario,usu_idusuario,idestadosolicitud,fechasolicitud,fecharespuesta,fechainiciosolicitud,fechafinalsolicitud,idsolicitud),
+                    async ()=> await solicitud.editar(idsolicitud,user.idusuario,idnegociacionsolicitud, idestadosolicitud, comentariorespuestanegociacionsolicitud, fechafinalcorregidanegociacionsolicitud, fechainiciocorregidanegociacionsolicitud),
                     res
                     );
 });

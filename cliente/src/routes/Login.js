@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Inicio from "./CRUD/Index";
 import TipoSolicitud from "./CRUD/TipoSolicitud";
 import SolicitudSolicitante from "./CRUD/SolicitudSolicitante";
+import SolicitudAdministrador from "./CRUD/SolicitudAdministrador";
 const Login = ()=>{
     const [nombreUsuario, setNombreUsuario] = useState("16.428.927-3");
     const [contrasena, setContrasena] = useState("164289273");
@@ -64,7 +65,7 @@ const Login = ()=>{
                     setUsuarioLogeado(resultSet.data.nombres);
                     setPerfil(resultSet.data.perfil);
                     setLogeado(true);
-                    navigate("/Usuario");
+                    navigate("/Inicio");
                 }else{
                     localStorage.clear();
                     alert(resultSet.data.respuesta);
@@ -113,6 +114,11 @@ const Login = ()=>{
     }
     return (
         <Routes>
+            {logeado &&(
+                <Route 
+                path="/Inicio" 
+                element={<Inicio usuarioLogeado={usuarioLogeado}/>}/>
+            )}
             {comprobarPerfil("Usuario") &&(
                 <Route 
                 path="/Usuario" 
@@ -123,22 +129,22 @@ const Login = ()=>{
                 path="/TipoSolicitud" 
                 element={<TipoSolicitud usuarioLogeado={usuarioLogeado}/>}/>
             )}
-            {comprobarPerfil("TipoSolicitud") &&(
+            {comprobarPerfil("MisSolicitudes") &&(
                 <Route 
-                path="/Solicitud" 
+                path="/MisSolicitudes" 
                 element={<SolicitudSolicitante usuarioLogeado={usuarioLogeado}/>}/>
             )}
-            {logeado &&(
+            {comprobarPerfil("AdministrarSolicitudes") &&(
                 <Route 
-                path="/Inicio" 
-                element={<Inicio usuarioLogeado={usuarioLogeado}/>}/>
+                path="/AdministrarSolicitudes" 
+                element={<SolicitudAdministrador usuarioLogeado={usuarioLogeado}/>}/>
             )}
             <Route
             path="/Login"
             element={<FrmLogin/>}/>
             <Route
             path="*"
-            element={<>Pagina No Encontrada</>}
+            element={<FrmLogin/>}
             />
         </Routes>
     );

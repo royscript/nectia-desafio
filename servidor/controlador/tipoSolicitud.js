@@ -3,6 +3,12 @@ const TipoSolicitud = require('../modelo/TipoSolicitud');
 const RouterRespuestas = require('../utils/RouterRerspuestas');
 const tipoSolicitud = new TipoSolicitud();
 
+router.post("/listar-todas-los-tipos-solicitudes",(req, res)=>{
+    RouterRespuestas(
+                    async ()=> await tipoSolicitud.listarTodas(),
+                    res
+                    );
+});
 router.post("/listar",(req, res)=>{
     const { body } = req;
     const { pagSiguiente, cantPorPag, search }= body;

@@ -12,6 +12,7 @@ const Permiso = require('./controlador/perfil');
 const TipoSolicitud = require('./controlador/tipoSolicitud');
 const Solicitud = require('./controlador/solicitud');
 const EstadoSolicitud = require('./controlador/estadoSolicitud');
+const Negociacion = require('./controlador/negociacion');
 //----------------------------
 
 //--------MIDDLEWARE-----------
@@ -28,7 +29,7 @@ app.use('/api/permiso/', Permiso);
 app.use('/api/tipo-solicitud/', TipoSolicitud);
 app.use('/api/solicitud/', Solicitud);
 app.use('/api/estado-solicitud/', EstadoSolicitud);
-
+app.use('/api/negociacion/', Negociacion);
 
 //------SUBIR APP--------------
 app.listen(process.env.PORT_NODE,()=>{

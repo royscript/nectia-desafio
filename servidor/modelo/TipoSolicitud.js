@@ -4,7 +4,7 @@ class TipoSolicitud extends mysql{
         super();
     }
 
-    listar(){
+    listarTodas(){
         return this.consulta("SELECT * FROM tiposolicitud");
     }
 

@@ -38,7 +38,7 @@ const NavBar = ({nombreMantenedor,dondeEstoy,mensajeInicial,usuarioLogeado})=>{
                         }
                         return <div className="me-3 py-2" style={estilo} onClick={()=>{
                             navigate("/"+data.nombrepermiso);
-                        }} key={index+"-menu"}>{data.nombrepermiso}</div>
+                        }} key={index+"-menu"}>{data.nombrepermiso.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")}</div>
                     })}
                     
                     <div className="me-3 py-2 text-dark text-decoration-none" style={{"cursor":"pointer"}}>
