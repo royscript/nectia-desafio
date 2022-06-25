@@ -22,7 +22,7 @@ ACCESS_TOKEN_SECRETO=
 REFRESH_TOKEN_SECRETO=
 ```
 
-<br><b>Cliente : </b> Contiene los modulos programados en React JS. El unico archivo configurable se encuentra en <b>src/api/config.js</b>, en el cual se debe configurar donde estará la ruta del servidor.
+<br><b>Cliente : </b> Contiene los modulos programados en React JS. El unico archivo configurable se encuentra en <a href="https://github.com/royscript/nectia-desafio/blob/master/cliente/src/api/config.js"><b>src/api/config.js</b></a>, en el cual se debe configurar donde estará la ruta del servidor.
 ```
 const BASE_URL = 'http://localhost:3001/api';
 export default BASE_URL;
