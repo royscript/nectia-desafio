@@ -144,7 +144,7 @@ CREATE TABLE `permisosdelusuario` (
 
 LOCK TABLES `permisosdelusuario` WRITE;
 /*!40000 ALTER TABLE `permisosdelusuario` DISABLE KEYS */;
-INSERT INTO `permisosdelusuario` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,2,4);
+INSERT INTO `permisosdelusuario` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,2,4),(7,2,2);
 /*!40000 ALTER TABLE `permisosdelusuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
