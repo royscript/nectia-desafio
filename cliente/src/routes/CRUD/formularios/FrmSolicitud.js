@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {axiosPrivate} from "../../../api/axios";
+import axiosPrivate from "../../../api/axiosPrivate";
 import { Formik, Form } from "formik";
 import Input from "../../../components/formulario/Input";
 import Boton from "../../../components/formulario/Boton";

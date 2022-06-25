@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NumeroPaginas from "./NumeroPaginas";
-import { axiosPrivate } from "../../api/axios";
+import axiosPrivate from "../../api/axiosPrivate";
 
 const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,funcionDeDatos,placeHolderSearch,eliminar, busquedaExtra, styleSearch}) => {
     const [registros, setRegistros] = useState([]);

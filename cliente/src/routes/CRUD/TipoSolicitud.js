@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {axiosPrivate} from "../../api/axios";
+import axiosPrivate from "../../api/axiosPrivate";
 import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
@@ -17,10 +17,10 @@ const TipoSolicitud = ({usuarioLogeado})=>{
             if(resultSet.status===200){
                 setTipoSolicitud(resultSet.data);
             }else{
-                alert("Error : "+resultSet.status);
+                console.log("Error : "+resultSet.status);
             }
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
         
     }

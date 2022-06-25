@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {axiosPrivate} from "../../api/axios";
+import axiosPrivate from "../../api/axiosPrivate";
 import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
@@ -23,7 +23,7 @@ const SolicitudAdministrador = ({usuarioLogeado})=>{
                 alert("Error : "+resultSet.status);
             }
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
         
     }
@@ -36,7 +36,7 @@ const SolicitudAdministrador = ({usuarioLogeado})=>{
                 alert("Error : "+resultSet.status);
             }
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
         
     }

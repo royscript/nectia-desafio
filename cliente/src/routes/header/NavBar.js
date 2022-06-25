@@ -17,7 +17,7 @@ const NavBar = ({nombreMantenedor,dondeEstoy,mensajeInicial,usuarioLogeado})=>{
                 const resultSet = await axios.post('/login/perfil-usuario', {token : tokenStorage});
                 setPerfil(resultSet.data.perfil);
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
         }
     }

@@ -10,8 +10,14 @@ import Inicio from "./CRUD/Index";
 import TipoSolicitud from "./CRUD/TipoSolicitud";
 import SolicitudSolicitante from "./CRUD/SolicitudSolicitante";
 import SolicitudAdministrador from "./CRUD/SolicitudAdministrador";
+import { getToken, setToken } from '../auth/Token';
+import { useSelector, useDispatch } from "react-redux";
 const Login = ()=>{
-    const [nombreUsuario, setNombreUsuario] = useState("16.428.927-3");
+    //--------REDUX-------------------------
+    const usuario = useSelector((state) => state.usuarioReducer);
+    const dispatch = useDispatch();
+    //--------CONSTANTES--------------------
+    const [nombreUsuario, setNombreUsuario] = useState("16428927-3");
     const [contrasena, setContrasena] = useState("164289273");
     const [logeado, setLogeado] = useState(false);
     const [usuarioLogeado, setUsuarioLogeado] = useState(null);
@@ -30,19 +36,18 @@ const Login = ()=>{
             const resultSet = await axios.post('/login/autenticar', {nombreusuario : md5(nombreUsuario),contrasena : md5(contrasena)});
             //console.log(resultSet.data);
             if(resultSet.data.login===true){
-                localStorage.clear();
-                localStorage.setItem('token', resultSet.data.token);
+                setToken(resultSet.data.token);
                 setUsuarioLogeado(resultSet.data.nombres);
+                dispatch({type : "cambiarToken",payload : resultSet.data.token});
+                dispatch({type : "cambiarNombreCompleto",payload : resultSet.data.nombres});
                 setPerfil(resultSet.data.perfil);
-                setLogeado(true);
-                navigate("/Usuario");
+                iniciar();
             }else{
-                localStorage.clear();
                 alert(resultSet.data.respuesta);
             }
             //setUsuarios(resultSet.data);
         } catch (error) {
-            alert(error);
+            console.log(error);
             navigate("/Login");
             /*setRespuestaConsulta(
                 <div className="alert alert-danger" role="alert">
@@ -52,31 +57,44 @@ const Login = ()=>{
         }
         
     }
+    const iniciar = async ()=>{
+        const token = await getToken();
+        console.log(token);
+        if(!token){
+            delete axios.defaults.headers.common['Authorization'];
+            return false;
+        }else{
+            axios.defaults.headers.common['Authorization'] = token;
+            setLogeado(true);
+            navigate("/Inicio");
+        }
+    }   
+
     const refrescarToken = async ()=>{
-        let tokenStorage = localStorage.getItem('token');
+        let tokenStorage = getToken();
         if(tokenStorage===null){
             //console.log("Sin token");
         }else{
             try {
                 const resultSet = await axios.post('/login/refrescar-token', {token : tokenStorage});
                 if(resultSet.data.login===true){
-                    localStorage.clear();
-                    localStorage.setItem('token', resultSet.data.token);
+                    setToken(resultSet.data.token);
                     setUsuarioLogeado(resultSet.data.nombres);
+                    dispatch({type : "cambiarToken",payload : resultSet.data.token});
+                    dispatch({type : "cambiarNombreCompleto",payload : resultSet.data.nombres});
                     setPerfil(resultSet.data.perfil);
-                    setLogeado(true);
-                    navigate("/Inicio");
+                    iniciar();
                 }else{
-                    localStorage.clear();
                     alert(resultSet.data.respuesta);
                     navigate("/Login");
                 }
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
         }
     }
     useEffect(()=>{
+        iniciar();
         refrescarToken();
     },[])
 

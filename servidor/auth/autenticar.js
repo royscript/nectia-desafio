@@ -6,12 +6,14 @@ const perfil = new Perfil();
 const isAuthenticated = async(req,res,next)=>{
     const token = req.headers.authorization;
     if(!token){
+        console.log("Error :"+token);
         return res.sendStatus(403);
     }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRETO ,async (err,decoded)=>{
         try {
             const { id } = decoded;
             if(typeof id === 'undefined'){
+                console.log("Error :"+id);
                 return res.sendStatus(403);
             }
             const respuesta = await usuario.buscarPorId(id);
@@ -23,6 +25,7 @@ const isAuthenticated = async(req,res,next)=>{
                 next();
             }
         } catch (error) {
+            console.log("Debe iniciar sesion");
             console.log(error);
             return res.sendStatus(403);
         }
