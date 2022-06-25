@@ -29,7 +29,7 @@ export default BASE_URL;
 
 ```
 
-<br><b>bd :</b> Esta carpeta es la que tiene el script de base de datos junto con una foto del MER realizado en Bizagi.
+<br><b>bd :</b> Esta carpeta es la que tiene el script de base de datos junto con una <a href="https://github.com/royscript/nectia-desafio/blob/master/bd/bd.png?raw=true">foto</a> del MER realizado en Bizagi.
 <br><b>Datos de prueba :</b>
 ```
 Usuario administrador : 
