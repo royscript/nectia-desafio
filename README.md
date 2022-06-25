@@ -31,6 +31,7 @@ export default BASE_URL;
 
 <br><b>bd :</b> Esta carpeta es la que tiene el script de base de datos junto con una foto del MER realizado en Bizagi.
 <br><b>Datos de prueba :</b>
+```
 <br>Usuario administrador : 
 <br><b>Usuario : </b> 16428927-3
 <br><b>Contraseña : </b> 164289273
@@ -38,7 +39,7 @@ export default BASE_URL;
 <br>Usuario solicitante : 
 <br><b>Usuario : </b> 8370986-3
 <br><b>Contraseña : </b> 123456
-
+```
 <br><b>Como Instalarlo : </b>
 <br>Instalar el script <b>base.sql</b> en tu gestor de base de datos mysql. Si utilizas XAAMP, recuerda que no utiliza contraseña. En este caso dejar en comentario la siguiente linea de codigo en <b>servidor/conexiones/conexionMysql.js
   
