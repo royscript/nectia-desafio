@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
-const NavBar = ({nombreMantenedor,dondeEstoy,mensajeInicial,usuarioLogeado})=>{
+import { useSelector } from "react-redux";
+const NavBar = ({nombreMantenedor,dondeEstoy,mensajeInicial})=>{
+    const usuario = useSelector((state) => state);
     const [perfil, setPerfil] = useState([]);
     const navigate = useNavigate();
     const cerrarSesion = ()=>{
@@ -49,7 +51,7 @@ const NavBar = ({nombreMantenedor,dondeEstoy,mensajeInicial,usuarioLogeado})=>{
                             </svg>
                             </button>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">{usuarioLogeado}</a></li>
+                                <li><a className="dropdown-item" href="#">{usuario.nombreCompleto}</a></li>
                                 <li><hr className="dropdown-divider"/></li>
                                 <li><a className="dropdown-item" href="#" onClick={()=>{
                                     cerrarSesion();

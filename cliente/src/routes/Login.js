@@ -1,6 +1,4 @@
-import NavBarLogin from "./header/NavBarLogin";
 import axios from "../api/axios";
-import Footer from "./footer/Footer";
 import { useEffect, useState } from "react";
 import Usuario from "./CRUD/Usuario";
 import md5 from 'md5';
@@ -12,18 +10,17 @@ import SolicitudSolicitante from "./CRUD/SolicitudSolicitante";
 import SolicitudAdministrador from "./CRUD/SolicitudAdministrador";
 import { getToken, setToken } from '../auth/Token';
 import { useSelector, useDispatch } from "react-redux";
+import FrmLogin from "./CRUD/formularios/FrmLogin";
 const Login = ()=>{
     //--------REDUX-------------------------
     const usuario = useSelector((state) => state.usuarioReducer);
     const dispatch = useDispatch();
     //--------CONSTANTES--------------------
-    const [nombreUsuario, setNombreUsuario] = useState("16428927-3");
-    const [contrasena, setContrasena] = useState("164289273");
     const [logeado, setLogeado] = useState(false);
     const [usuarioLogeado, setUsuarioLogeado] = useState(null);
     const [perfil, setPerfil] = useState([]);
     const navigate = useNavigate();
-    const login = async (search)=>{
+    const login = async (nombreUsuario,contrasena)=>{
         if(nombreUsuario.length===0){
             alert("Escriba el nombre de usuario");
             return false;
@@ -59,7 +56,6 @@ const Login = ()=>{
     }
     const iniciar = async ()=>{
         const token = await getToken();
-        console.log(token);
         if(!token){
             delete axios.defaults.headers.common['Authorization'];
             return false;
@@ -98,29 +94,7 @@ const Login = ()=>{
         refrescarToken();
     },[])
 
-    const FrmLogin = ()=>{
-        return (
-            <div className="container py-3">
-                <NavBarLogin nombreMantenedor="Login" dondeEstoy="" mensajeInicial="Ingresa tus datos para iniciar sesión"/>
-                    <main style={{"width":"450px"}}>
-                        <div className="align-content-lg-center">
-                            <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label"><b>Rut (**.***.***-*)</b></label>
-                                <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="rut" onChange={(e)=>setNombreUsuario(e.target.value)} value={nombreUsuario}/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="exampleFormControlTextarea1" className="form-label"><b>Contraseña</b></label>
-                                <input type="password" className="form-control" id="exampleFormControlInput1" placeholder="contarseña" onChange={(e)=>setContrasena(e.target.value)} value={contrasena}/>
-                            </div>
-                            <div className="mb-3">
-                                <button type="button" className="btn btn-primary" onClick={()=>login()}>Login</button>
-                            </div>
-                        </div>
-                    </main>
-                <Footer/>
-            </div>
-         );
-    }
+    
     
     const comprobarPerfil = (permiso)=>{
         //Si tiene el perfil y esta logeado
@@ -135,34 +109,34 @@ const Login = ()=>{
             {logeado &&(
                 <Route 
                 path="/Inicio" 
-                element={<Inicio usuarioLogeado={usuarioLogeado}/>}/>
+                element={<Inicio/>}/>
             )}
             {comprobarPerfil("Usuario") &&(
                 <Route 
                 path="/Usuario" 
-                element={<Usuario usuarioLogeado={usuarioLogeado}/>}/>
+                element={<Usuario/>}/>
             )}
             {comprobarPerfil("TipoSolicitud") &&(
                 <Route 
                 path="/TipoSolicitud" 
-                element={<TipoSolicitud usuarioLogeado={usuarioLogeado}/>}/>
+                element={<TipoSolicitud/>}/>
             )}
             {comprobarPerfil("MisSolicitudes") &&(
                 <Route 
                 path="/MisSolicitudes" 
-                element={<SolicitudSolicitante usuarioLogeado={usuarioLogeado}/>}/>
+                element={<SolicitudSolicitante/>}/>
             )}
             {comprobarPerfil("AdministrarSolicitudes") &&(
                 <Route 
                 path="/AdministrarSolicitudes" 
-                element={<SolicitudAdministrador usuarioLogeado={usuarioLogeado}/>}/>
+                element={<SolicitudAdministrador/>}/>
             )}
             <Route
             path="/Login"
-            element={<FrmLogin/>}/>
+            element={<FrmLogin login={login}/>}/>
             <Route
             path="*"
-            element={<FrmLogin/>}
+            element={<FrmLogin login={login}/>}
             />
         </Routes>
     );

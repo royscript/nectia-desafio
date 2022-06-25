@@ -61,6 +61,46 @@ class Solicitud extends mysql{
         return resp;
     }
 
+    async buscarSolicitudesDelAdministrador(pagSiguiente, cantPorPag, estadoSolicitudSeleccionada, fechaInicio, fechaFinal){
+        var where = ' WHERE 1 = 1 '; 
+        var parametrosBuscar = [];
+        
+        if(estadoSolicitudSeleccionada!="" && estadoSolicitudSeleccionada!=null){
+            parametrosBuscar = [...parametrosBuscar,parseInt(estadoSolicitudSeleccionada)]
+            where += ` AND S.idestadosolicitud = ? `;
+        }
+        if(fechaInicio!="" && fechaInicio!=null){
+            parametrosBuscar = [...parametrosBuscar,fechaInicio ]
+            where += ` AND DATE_FORMAT(S.fechainiciosolicitud, "%d-%m-%Y") LIKE DATE_FORMAT(?, "%d-%m-%Y") `;
+        }
+        if(fechaFinal!="" && fechaFinal!=null){
+            parametrosBuscar = [...parametrosBuscar,fechaFinal ]
+            where += ` AND DATE_FORMAT(S.fechafinalsolicitud, "%d-%m-%Y") LIKE DATE_FORMAT(?, "%d-%m-%Y") `;
+        }
+        const select = `SELECT  S.*, CONCAT(ADMIN.nombreusuario," ",ADMIN.apellidousuario) AS nombresAdministrador, 
+                            CONCAT(CLIENTE.nombreusuario," ",CLIENTE.apellidousuario) AS nombresCliente,
+                            TS.nombretiposolicitud AS nombretiposolicitud,
+                            ES.nombreestadosolicitud AS nombreestadosolicitud,
+                            DATE_FORMAT(S.fechainiciosolicitud, "%d-%m-%Y") fechaInicio,
+                            DATE_FORMAT(S.fechafinalsolicitud, "%d-%m-%Y") fechaFin `;
+        const sql = ` 
+                    FROM solicitud S
+                    LEFT JOIN usuario ADMIN
+                    ON(ADMIN.idusuario=S.idusuario)
+                    INNER JOIN usuario CLIENTE
+                    ON(CLIENTE.idusuario=S.usu_idusuario)
+                    INNER JOIN tiposolicitud TS
+                    ON(TS.idtiposolicitud=S.idtiposolicitud)
+                    INNER JOIN estadosolicitud ES
+                    ON(ES.idestadosolicitud=S.idestadosolicitud)
+                    `;
+        let resp = {
+            datos : await this.consulta(select+sql+where+" ORDER BY idsolicitud DESC "+this.paginador(pagSiguiente, cantPorPag),parametrosBuscar),
+            cantidad : await this.consulta("SELECT count(idsolicitud) as cantidad "+sql+" "+where+" ORDER BY idsolicitud DESC ",parametrosBuscar)
+        }
+        return resp;
+    }
+
     async listarConFiltro(pagSiguiente, cantPorPag, search){
         var where = ''; 
         var parametrosBuscar = [];

@@ -5,7 +5,7 @@ import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
 import FrmSolicitud from "./formularios/FrmSolicitud";
 import VistaSolicitudSolicitante from "./vistas/VistaSolicitudSolicitante";
-const SolicitudSolicitante = ({usuarioLogeado})=>{
+const SolicitudSolicitante = ()=>{
     const [tipoSolicitud, setTipoSolicitud] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
     const [accionFormulario,setAccionFormulario] = useState(null);
@@ -86,7 +86,7 @@ const SolicitudSolicitante = ({usuarioLogeado})=>{
     }
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Mis Solicitudes" dondeEstoy="MisSolicitudes" mensajeInicial="" usuarioLogeado={usuarioLogeado}/>
+            <NavBar nombreMantenedor="Mis Solicitudes" dondeEstoy="MisSolicitudes" mensajeInicial=""/>
             <main>
                 <button style={{"float":"right","marginTop":"-50px"}} 
                         className="btn btn-primary btn-sm"

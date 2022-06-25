@@ -4,7 +4,7 @@ import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
 import FrmEvaluarSolicitud from "./formularios/FrmEvaluarSolicitud";
-const SolicitudAdministrador = ({usuarioLogeado})=>{
+const SolicitudAdministrador = ()=>{
     const [tipoSolicitud, setTipoSolicitud] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
     const [accionFormulario,setAccionFormulario] = useState(null);
@@ -29,7 +29,7 @@ const SolicitudAdministrador = ({usuarioLogeado})=>{
     }
     const listarSolicitudes = async (search)=>{
         try {
-            const resultSet = await axiosPrivate.post('/solicitud/listar-solicitudes-usuario', {pagSiguiente : pagSiguiente, cantPorPag : cantPorPag, search, estadoSolicitudSeleccionada, fechaInicio, fechaFinal});
+            const resultSet = await axiosPrivate.post('/solicitud/listar-solicitudes-administrador', {pagSiguiente : pagSiguiente, cantPorPag : cantPorPag, search, estadoSolicitudSeleccionada, fechaInicio, fechaFinal});
             if(resultSet.status===200){
                 setTipoSolicitud(resultSet.data);
             }else{
@@ -78,7 +78,7 @@ const SolicitudAdministrador = ({usuarioLogeado})=>{
     }
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Administrar Solicitudes" dondeEstoy="AdministrarSolicitudes" mensajeInicial="" usuarioLogeado={usuarioLogeado}/>
+            <NavBar nombreMantenedor="Administrar Solicitudes" dondeEstoy="AdministrarSolicitudes" mensajeInicial=""/>
             <main>
             <TablePagination
                 head={

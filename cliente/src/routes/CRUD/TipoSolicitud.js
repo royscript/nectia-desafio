@@ -4,7 +4,7 @@ import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
 import FrmTipoSolicitud from "./formularios/FrmTipoSolicitud";
-const TipoSolicitud = ({usuarioLogeado})=>{
+const TipoSolicitud = ()=>{
     const [tipoSolicitud, setTipoSolicitud] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
     const [accionFormulario,setAccionFormulario] = useState(null);
@@ -40,7 +40,7 @@ const TipoSolicitud = ({usuarioLogeado})=>{
     }
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Tipo de Solicitud" dondeEstoy="TipoSolicitud" mensajeInicial="" usuarioLogeado={usuarioLogeado}/>
+            <NavBar nombreMantenedor="Tipo de Solicitud" dondeEstoy="TipoSolicitud" mensajeInicial=""/>
             <main>
                 <button style={{"float":"right","marginTop":"-50px"}} 
                         className="btn btn-primary btn-sm"

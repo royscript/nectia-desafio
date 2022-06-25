@@ -4,7 +4,7 @@ import Footer from "../footer/Footer";
 import NavBar from "../header/NavBar";
 import TablePagination from '../../components/tablas/TablePagination';
 import FrmUsuario from "./formularios/FrmUsuario";
-const Usuario = ({usuarioLogeado})=>{
+const Usuario = ()=>{
     const [usuarios, setUsuarios] = useState([]);
     const [valoresFormulario, setValoresFormulario] = useState(null);
     const [accionFormulario,setAccionFormulario] = useState(null);
@@ -42,7 +42,7 @@ const Usuario = ({usuarioLogeado})=>{
     }
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Usuarios" dondeEstoy="Usuario" mensajeInicial="" usuarioLogeado={usuarioLogeado}/>
+            <NavBar nombreMantenedor="Usuarios" dondeEstoy="Usuario" mensajeInicial=""/>
             <main>
                 <button style={{"float":"right","marginTop":"-50px"}} 
                         className="btn btn-primary btn-sm"

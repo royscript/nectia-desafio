@@ -3,7 +3,7 @@ import NavBar from "../header/NavBar";
 import axiosPrivate from "../../api/axiosPrivate";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-const Inicio = ({usuarioLogeado})=>{
+const Inicio = ()=>{
     const usuario = useSelector((state) => state);
     useEffect(()=>{
         //Como siempre la aplicacion comienza acá, desde este punto inicializamos el token para que sea utilizado en toda la aplicacion
@@ -18,7 +18,7 @@ const Inicio = ({usuarioLogeado})=>{
     },[])
     return (
         <div className="container py-3">
-            <NavBar nombreMantenedor="Inicio" dondeEstoy="Inicio" mensajeInicial={"Bienvenido "+usuario.nombreCompleto} usuarioLogeado={usuarioLogeado}/>
+            <NavBar nombreMantenedor="Inicio" dondeEstoy="Inicio" mensajeInicial={"Bienvenido "+usuario.nombreCompleto}/>
             <main>
                 
             

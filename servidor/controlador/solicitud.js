@@ -19,6 +19,14 @@ router.post("/listar-solicitudes-usuario",(req, res)=>{
                     res
                     );
 });
+router.post("/listar-solicitudes-administrador",(req, res)=>{
+    const { body } = req;
+    const { pagSiguiente, cantPorPag, estadoSolicitudSeleccionada, fechaInicio, fechaFinal }= body;
+    RouterRespuestas(
+                    async ()=> await solicitud.buscarSolicitudesDelAdministrador(pagSiguiente, cantPorPag, estadoSolicitudSeleccionada, fechaInicio, fechaFinal),
+                    res
+                    );
+});
 router.post("/buscar-solicitud-usuario",(req, res)=>{
     const { body } = req;
     const { idsolicitud }= body;
