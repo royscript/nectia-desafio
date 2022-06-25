@@ -28,4 +28,45 @@ const BASE_URL = 'http://localhost:3001/api';
 export default BASE_URL;
 
 ```
+
+<br><b>bd :</b> Esta carpeta es la que tiene el script de base de datos junto con una foto del MER realizado en Bizagi.
+<br><b>Datos de prueba :</b>
+<br>Usuario administrador : 
+<br><b>Usuario : </b> 16428927-3
+<br><b>Contraseña : </b> 164289273
+
+<br>Usuario solicitante : 
+<br><b>Usuario : </b> 8370986-3
+<br><b>Contraseña : </b> 123456
+
+<br><b>Como Instalarlo : </b>
+<br>Instalar el script <b>base.sql</b> en tu gestor de base de datos mysql. Si utilizas XAAMP, recuerda que no utiliza contraseña. En este caso dejar en comentario la siguiente linea de codigo en <b>servidor/conexiones/conexionMysql.js
+  
+```
+constructor(){
+    this.conexion = mysql.createPool({
+        host : process.env.HOST_MYSQL,
+        user : process.env.USER_MYSQL,
+        //password : process.env.PASSWORD_MYSQL,
+        database : process.env.DATABASE_MYSQL
+    });
+};
+
+```
+<br><b>Instalar dependencias :</b> Ingresar con tu linea de comandos a la carpeta principal, escribir los siguientes comandos
+```
+  cd servidor
+  npm install
+  
+  cd cliente
+  npm install
+```
+  <br><b>Ejecutar :</b>
+```
+  cd cliente
+  npm start
+  
+  cd servidor
+  node index.js
+```
  
