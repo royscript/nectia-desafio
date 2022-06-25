@@ -41,7 +41,7 @@ Usuario : 8370986-3
 Contraseña : 123456
 ```
 <br><b>Como Instalarlo : </b>
-<br>Instalar el script <b>base.sql</b> en tu gestor de base de datos mysql. Si utilizas XAAMP, recuerda que no utiliza contraseña. En este caso dejar en comentario la siguiente linea de codigo en <b>servidor/conexiones/conexionMysql.js
+<br>Instalar el script <b>base.sql</b> en tu gestor de base de datos mysql. Si utilizas XAAMP, recuerda que no utiliza contraseña. En este caso dejar en comentario la siguiente linea de codigo en <a href="https://github.com/royscript/nectia-desafio/blob/master/servidor/conexiones/conexionMysql.js"><b>servidor/conexiones/conexionMysql.js</b></a>
   
 ```
 constructor(){
