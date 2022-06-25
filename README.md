@@ -9,7 +9,7 @@ Esta es una aplicacion que permite realizar solicitudes por parte de los usuario
 </ul>
 <br>Instrucciones:
 <br>Existen 3 carpetas:
-<br><b>Servidor :</b> Contiene los modulos programados en Node JS. Tiene variables globales <b>.env</b> con las cuales se puede configurar el modulo para acceder a la bd mysql.
+<br><b>Servidor :</b> Contiene los modulos programados en Node JS. Tiene variables globales <a href="https://github.com/royscript/nectia-desafio/blob/master/servidor/.env"><b>.env</b></a> con las cuales se puede configurar el modulo para acceder a la bd mysql.
 
 ```
 HOST_MYSQL=127.0.0.1
