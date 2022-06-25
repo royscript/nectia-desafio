@@ -1,11 +1,7 @@
 import axios from "axios";
-const token = localStorage.getItem('token');
-if(!token){
-    console.log(token);
-}
-console.log(token);
+import BASE_URL from "./config";
 
-const axiosPrivate = axios.create({ baseURL: 'http://localhost:3001/api' });
+const axiosPrivate = axios.create({ baseURL: BASE_URL });
 
 
   export default axiosPrivate;
