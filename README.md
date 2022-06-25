@@ -10,6 +10,10 @@ Esta es una aplicacion que permite realizar solicitudes por parte de los usuario
 <br>Instrucciones:
 <br>Existen 3 carpetas:
 <ul>
-  <li><b>Servidor :</b> Contiene los modulos programados en Node JS. Tiene variables globales con las cuales se puede configurar el modulo para acceder a la bd mysql.</li>
+  <li><b>Servidor :</b> Contiene los modulos programados en Node JS. Tiene variables globales con las cuales se puede configurar el modulo para acceder a la bd mysql.
+  ```
+Da un ejemplo
+```
+  </li>
   <li><b>Cliente : </b> Contiene los modulos programados en React JS. El unico archivo configurable se encuentra en src/api/config.js, en el cual se debe configurar donde estará la ruta del servidor.</li>
 </ul>
