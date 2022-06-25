@@ -25,6 +25,7 @@ const TablePagination = ({head,mostrarDatos,data,setCantPorPag,setPagSiguiente,f
     function handleChange(event) {
         setCantPorPag(event.target.value);
         setCantPPag(event.target.value);
+        setPagSiguiente(1);
     }
     useEffect(()=>{
         
